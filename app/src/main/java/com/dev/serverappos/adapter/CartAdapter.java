@@ -50,44 +50,44 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
         final User.BillDeltail deltail = deltails.get(position);
 
 
-            holder.txtnameproduct.setText(product.getNameproduct());
-            holder.txtnameshop.setText(product.getNameshop());
-            holder.txtTrangthai.setText(deltails.get(position).getTrangThaiB());
-            String trangthai = deltails.get(position).getTrangThaiB();
-            if (trangthai.equalsIgnoreCase("Đã Xác Nhận")) {
-                holder.txtTrangthai.setTextColor(Color.parseColor("#00c853"));
-                holder.btndeletecart.setVisibility(View.INVISIBLE);
-                
-            }
-            if (trangthai.equalsIgnoreCase("Đã Hủy")) {
-                holder.txtTrangthai.setTextColor(Color.parseColor("#fa0e0e"));
-                holder.btndeletecart.setVisibility(View.VISIBLE);
-            }
+        holder.txtnameproduct.setText(product.getNameproduct());
+        holder.txtnameshop.setText(product.getNameshop());
+        holder.txtTrangthai.setText(deltails.get(position).getTrangThaiB());
+        String trangthai = deltails.get(position).getTrangThaiB();
+        if (trangthai.equalsIgnoreCase("Đã Xác Nhận")) {
+            holder.txtTrangthai.setTextColor(Color.parseColor("#00c853"));
+            holder.btndeletecart.setVisibility(View.INVISIBLE);
+
+        }
+        if (trangthai.equalsIgnoreCase("Đã Hủy")) {
+            holder.txtTrangthai.setTextColor(Color.parseColor("#fa0e0e"));
+            holder.btndeletecart.setVisibility(View.VISIBLE);
+        }
         if (trangthai.equalsIgnoreCase("Đã Nhận Hàng")) {
             holder.txtTrangthai.setTextColor(Color.parseColor("#1a237e"));
             holder.btndeletecart.setVisibility(View.VISIBLE);
         }
         if (trangthai.equalsIgnoreCase("Đang Chờ")) {
-            holder.txtTrangthai.setTextColor(Color.parseColor("#1a237e"));
+
             holder.btndeletecart.setVisibility(View.INVISIBLE);
         }
-            Picasso.get().load(product.getUri()).into(holder.imgnameproduct);
+        Picasso.get().load(product.getUri()).into(holder.imgnameproduct);
 
 
 
-            holder.btndeletecart.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    context.deletesp(position, product.getNameproduct(), products.size());
-                }
-            });
-            holder.cvCart.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    context.clickbill(deltail);
-                }
-            });
-        }
+        holder.btndeletecart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.deletesp(position, product.getNameproduct(), products.size());
+            }
+        });
+        holder.cvCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.clickbill(deltail);
+            }
+        });
+    }
 
 
     @Override

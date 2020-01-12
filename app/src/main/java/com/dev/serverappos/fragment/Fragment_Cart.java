@@ -126,105 +126,105 @@ public class Fragment_Cart extends BaseFragment {
             }else{
 
 
-            mDatabase.child("id").child("User").child(id).child("cart").addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    User.cartsp cartsp = dataSnapshot.getValue(User.cartsp.class);
-                    if (dataSnapshot.getKey() != null) {
-                        Log.e("CHECK", dataSnapshot.getKey());
-                        idspham.add(0,dataSnapshot.getKey());
-                        loading.setVisibility(View.INVISIBLE);
-                        scrollView.setAlpha(1f);
-                    }
-                    giohangArray.add(0,cartsp);
-                    mDatabase.child("id").child(cartsp.getIdsp()).child("product").addChildEventListener(new ChildEventListener() {
-                        @Override
-                        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                            User.Product product = dataSnapshot.getValue(User.Product.class);
-                            products.add(0, product);
-                            cartAdapter.notifyDataSetChanged();
+                mDatabase.child("id").child("User").child(id).child("cart").addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        User.cartsp cartsp = dataSnapshot.getValue(User.cartsp.class);
+                        if (dataSnapshot.getKey() != null) {
+                            Log.e("CHECK", dataSnapshot.getKey());
+                            idspham.add(0,dataSnapshot.getKey());
+                            loading.setVisibility(View.INVISIBLE);
+                            scrollView.setAlpha(1f);
                         }
+                        giohangArray.add(0,cartsp);
+                        mDatabase.child("id").child(cartsp.getIdsp()).child("product").addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                                User.Product product = dataSnapshot.getValue(User.Product.class);
+                                products.add(0, product);
+                                cartAdapter.notifyDataSetChanged();
+                            }
 
-                        @Override
-                        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                            @Override
+                            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                        }
+                            }
 
-                        @Override
-                        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                            @Override
+                            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
 
-                        }
+                            }
 
-                        @Override
-                        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                            @Override
+                            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                        }
+                            }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                        }
-                    });
-                    Log.e("KEY", giohangArray.size() + "");
-                }
-
-                @Override
-                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    Log.e("KEY", "a");
-                }
-
-                @Override
-                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-                    Log.e("KEY", "b");
-                }
-
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    Log.e("KEY", "c");
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                    Log.e("KEY", "d");
-                }
-            });
-            mDatabase.child("id").child("User").child(id).child("bill").addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    User.BillDeltail deltail = dataSnapshot.getValue(User.BillDeltail.class);
-                    if (dataSnapshot.getKey() != null) {
-                        Log.e("CHECK1", dataSnapshot.getKey());
-                        bills.add(0,dataSnapshot.getKey());
-                        Log.e("CHECK3", bills.get(0));
-                        deltails.add(0,deltail);
+                            }
+                        });
+                        Log.e("KEY", giohangArray.size() + "");
                     }
 
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        Log.e("KEY", "a");
+                    }
 
-                }
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                        Log.e("KEY", "b");
+                    }
 
-                @Override
-                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        Log.e("KEY", "c");
+                    }
 
-                }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.e("KEY", "d");
+                    }
+                });
+                mDatabase.child("id").child("User").child(id).child("bill").addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        User.BillDeltail deltail = dataSnapshot.getValue(User.BillDeltail.class);
+                        if (dataSnapshot.getKey() != null) {
+                            Log.e("CHECK1", dataSnapshot.getKey());
+                            bills.add(0,dataSnapshot.getKey());
+                            Log.e("CHECK3", bills.get(0));
+                            deltails.add(0,deltail);
+                        }
 
-                @Override
-                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
 
-                }
+                    }
 
-                @Override
-                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                }
+                    }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
 
-                }
-            });
-        }
+                    }
 
-    }}
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+        }}
 
     public void deletesp(final int posion, String tensp, final int size){
         AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
@@ -235,7 +235,7 @@ public class Fragment_Cart extends BaseFragment {
             public void onClick(DialogInterface dialog, int which) {
 
             }
-            });
+        });
 
         builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
@@ -266,18 +266,6 @@ public class Fragment_Cart extends BaseFragment {
                         }
                     }
                 });
-                mDatabase.child("id").child("bill").child(bills.get(posion)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        loading.setVisibility(View.INVISIBLE);
-                        scrollView.setAlpha(1f);
-                        getcart();
-                        if (size==1){
-
-                        }
-                    }
-                });
-
 
             }
         });
@@ -330,8 +318,8 @@ public class Fragment_Cart extends BaseFragment {
             public void onClick(View v) {
                 String phoneNo = nameMua;
 
-                    String dial = "tel:" + phoneNo;
-                    startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(dial)));
+                String dial = "tel:" + phoneNo;
+                startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(dial)));
 
             }
         });
@@ -360,13 +348,15 @@ public class Fragment_Cart extends BaseFragment {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             deltail.setTrangThaiB("Đã Hủy");
-                            mDatabase.child("id").child("User").child(id).child("bill").child(bills.get(0)).setValue(deltail).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            mDatabase.child("id").child("User").child(id).child("bill").child(deltail.getIdbilll()).setValue(deltail).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     //Toast.makeText(getActivity(), "Đặt hàng thành công", Toast.LENGTH_SHORT).show();
+                                    deltails.add(deltails.size()-1,deltail);
+
                                 }
                             });
-                            mDatabase.child("id").child("User").child(idmua).child("bill").child(bills.get(0)).setValue(deltail).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            mDatabase.child("id").child("User").child(idmua).child("bill").child(deltail.getIdbilll()).setValue(deltail).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
 
@@ -402,13 +392,13 @@ public class Fragment_Cart extends BaseFragment {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             deltail.setTrangThaiB("Đã Xác Nhận");
-                            mDatabase.child("id").child("User").child(id).child("bill").child(bills.get(0)).setValue(deltail).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            mDatabase.child("id").child("User").child(id).child("bill").child(deltail.getIdbilll()).setValue(deltail).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Toast.makeText(getActivity(), "Xác Nhận Thành Công", Toast.LENGTH_SHORT).show();
                                 }
                             });
-                            mDatabase.child("id").child("User").child(idMua).child("bill").child(bills.get(0)).setValue(deltail).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            mDatabase.child("id").child("User").child(idMua).child("bill").child(deltail.getIdbilll()).setValue(deltail).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
 
