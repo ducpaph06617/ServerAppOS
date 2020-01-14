@@ -15,6 +15,7 @@ import com.dev.serverappos.R;
 import com.dev.serverappos.fragment.Fragment_Home;
 import com.dev.serverappos.fragment.Fragment_Menu;
 import com.dev.serverappos.user.User;
+import com.google.firebase.database.DatabaseReference;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 public class ProductuserAdapter extends RecyclerView.Adapter<ProductuserAdapter.CartHolder> {
     private Fragment_Home context;
     private ArrayList<User.Product> products;
-
+    private DatabaseReference mDatabase;
 
     public ProductuserAdapter(Fragment_Home context, ArrayList<User.Product> products) {
         this.context = context;
@@ -43,7 +44,7 @@ public class ProductuserAdapter extends RecyclerView.Adapter<ProductuserAdapter.
         holder.txtColor.setText("Loại : " + product.getLoaisp());
         holder.txtgia.setText("Giá:" + Double.parseDouble(product.getPriceproduct()) + "đ");
         holder.txtnameproduct.setText("Tên sản phẩm:" + product.getNameproduct());
-        holder.txtsoluong.setText("Số lượng:" + product.getSoluong());
+
 
         Picasso.get().load(product.getUri()).into(holder.imgnameproduct);
 
@@ -73,7 +74,7 @@ public class ProductuserAdapter extends RecyclerView.Adapter<ProductuserAdapter.
         public ImageView imgnameproduct;
         public TextView txtnameproduct;
         public TextView txtColor;
-        public TextView txtsoluong;
+
         public TextView txtgia;
 
 
@@ -83,7 +84,7 @@ public class ProductuserAdapter extends RecyclerView.Adapter<ProductuserAdapter.
             txtColor = itemView.findViewById(R.id.txtColor);
             txtnameproduct = itemView.findViewById(R.id.txtnameproduct);
             txtgia = itemView.findViewById(R.id.txtgia);
-            txtsoluong = itemView.findViewById(R.id.txtsoluong);
+
             btndeletecart = itemView.findViewById(R.id.btndeletecprodut);
 
 

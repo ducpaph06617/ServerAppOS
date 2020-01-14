@@ -352,7 +352,7 @@ public class Fragment_Cart extends BaseFragment {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     //Toast.makeText(getActivity(), "Đặt hàng thành công", Toast.LENGTH_SHORT).show();
-                                    deltails.add(deltails.size()-1,deltail);
+
 
                                 }
                             });

@@ -187,7 +187,6 @@ public class UpdateProActivity extends AppCompatActivity {
                 edtTenshop.setText(product.getNameshop());
                 edtGia.setText( product.getPriceproduct());
                 edtMota.setText(product.getDescribe());
-                edtSoluong.setText(product.getSoluong());
             }
 
             @Override
@@ -224,7 +223,7 @@ public class UpdateProActivity extends AppCompatActivity {
                         String nameproduc = edtTensp.getText().toString().trim();
                         String price = edtGia.getText().toString().trim();
                         String des = edtMota.getText().toString().trim();
-                        String soluong = edtSoluong.getText().toString().trim();
+
                         final String neww = sharedPreferences.getString("new", "");
                         String statuss = sharedPreferences.getString("status", "");
                         if (listLoai.get(position).equalsIgnoreCase("Chọn loại")) {
@@ -243,10 +242,7 @@ public class UpdateProActivity extends AppCompatActivity {
                             edtGia.setError("Chưa nhập giá!!!");
                             return;
                         }
-                        if (soluong.equals("")) {
-                            edtTensp.setError("Chưa nhập số lượng!!!");
-                            return;
-                        }
+
                         if (des.equals("")) {
                             edtMota.setError("Chưa nhập mô tả!!!");
                             return;
@@ -259,7 +255,7 @@ public class UpdateProActivity extends AppCompatActivity {
                         String idsp = intent.getStringExtra("idpro");
                         Calendar calendar = Calendar.getInstance();
                         User.Product product = new User.Product(idU,nameshop, nameproduc, price, data, neww, statuss, des, idsp,
-                                uri.get(0), listLoai.get(position), soluong, String.valueOf(calendar.getTimeInMillis()));
+                                uri.get(0), listLoai.get(position), String.valueOf(calendar.getTimeInMillis()));
 
                         List<String> sp = new ArrayList<>();
                         sp.clear();

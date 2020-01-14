@@ -72,9 +72,9 @@ import static android.content.Context.MODE_PRIVATE;
 public class Fragment_Home extends BaseFragment {
 
     private RecyclerView recyclerviewproduct;
-    private String id="";
+    private String id = "";
     private DatabaseReference mDatabase;
-    private ArrayList<User.Product> products=new ArrayList<>();
+    private ArrayList<User.Product> products = new ArrayList<>();
     private ProductuserAdapter productuserAdapter;
     private LinearLayoutManager linearLayoutManager;
     private SharedPreferences sharedPreferences;
@@ -82,11 +82,8 @@ public class Fragment_Home extends BaseFragment {
     private TextView txtthongbao;
     private ArrayList<String> uri = new ArrayList<>();
 
-    private ArrayList<String> path = new ArrayList<>();
-
-    private List<ColorModel> models = new ArrayList<>();
-
-    private List<String> listcolor = new ArrayList<>();
+    private ArrayList<User.BillDeltail> deltails = new ArrayList<>();
+    private ArrayList<String> bills = new ArrayList<>();
     private String data = "";
     private static final int REQUEST_LIST_CODE = 0;
     private TextView txtProduct;
@@ -128,14 +125,14 @@ public class Fragment_Home extends BaseFragment {
         recyclerviewproduct = view.findViewById(R.id.recyclerviewproduct);
         txtthongbao = view.findViewById(R.id.txtthongbao);
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        linearLayoutManager=new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
-        productuserAdapter=new ProductuserAdapter(this,products);
+        linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        productuserAdapter = new ProductuserAdapter(this, products);
         recyclerviewproduct.setLayoutManager(linearLayoutManager);
         recyclerviewproduct.setHasFixedSize(true);
         recyclerviewproduct.setAdapter(productuserAdapter);
         Intent intent = getActivity().getIntent();
         id = intent.getStringExtra("id");
-        Log.e("IDUS", "onCreateView: "+ id );
+        Log.e("IDUS", "onCreateView: " + id);
 //        Toast.makeText(getActivity(), "Home Fragment", Toast.LENGTH_SHORT).show();
         getproductuser();
         ISNav.getInstance().init(new ImageLoader() {
@@ -148,50 +145,90 @@ public class Fragment_Home extends BaseFragment {
     }
 
 
-    public void deletesp(final User.Product product,final int i) {
-
-        AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
-        builder.setTitle("Thông báo");
-        builder.setMessage("Bạn có muốn xóa sản phẩm\t"+product.getNameproduct()+"\tkhông?");
-        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+    public void deletesp(final User.Product product, final int i) {
+        mDatabase.child("id").child("User").child(id).child("bill").addChildEventListener(new ChildEventListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-
-        builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                mDatabase.child("id").child(product.getIdsp()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-
-                    }
-                });
-
-                mDatabase.child("id").child("User").child(id).child("user").child("idsp").child(product.getIdsp()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-
-                    }
-                });
-                mDatabase.child("id").child("User").child("sp").child(product.getIdsp()).removeValue();
-
-
-                getproductuser();
-                productuserAdapter.notifyDataSetChanged();
-                if (i==0){
-                    txtthongbao.setVisibility(View.VISIBLE);
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                User.BillDeltail deltail = dataSnapshot.getValue(User.BillDeltail.class);
+                if (dataSnapshot.getKey() != null) {
+                    Log.e("CHECK1", dataSnapshot.getKey());
+                    bills.add(0, dataSnapshot.getKey());
+                    Log.e("CHECK3", bills.get(0));
                 }
+                deltails.add(0, deltail);
+                for (int j = 0; j < deltails.size(); j++) {
+                    if (!deltails.get(j).getIdsp().equalsIgnoreCase(product.getIdsp())) {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle("Thông báo");
+                        builder.setMessage("Bạn có muốn xóa sản phẩm\t" + product.getNameproduct() + "\tkhông?");
+                        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+
+                        builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+
+                                mDatabase.child("id").child(product.getIdsp()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+
+                                    }
+                                });
+
+                                mDatabase.child("id").child("User").child(id).child("user").child("idsp").child(product.getIdsp()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+
+                                    }
+                                });
+                                mDatabase.child("id").child("User").child("sp").child(product.getIdsp()).removeValue();
+
+                                getproductuser();
+                                productuserAdapter.notifyDataSetChanged();
+                                if (i == 0) {
+                                    txtthongbao.setVisibility(View.VISIBLE);
+                                }
+
+
+                            }
+                        });
+
+
+                        builder.show();
+
+                    } else if (deltails.get(j).getIdsp().equalsIgnoreCase(product.getIdsp())) {
+                        Toast.makeText(getActivity(), "Sản phẩm đang có người mua", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
 
-
-
-        builder.show();
     }
 
     private void getproductuser() {
@@ -199,8 +236,8 @@ public class Fragment_Home extends BaseFragment {
         mDatabase.child("id").child("User").child(id).child("user").child("idsp").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Object o=dataSnapshot.getValue();
-                Log.e("O",o.toString());
+                Object o = dataSnapshot.getValue();
+                Log.e("O", o.toString());
 
                 mDatabase.child("id").child(o.toString()).child("product").addChildEventListener(new ChildEventListener() {
                     @Override
@@ -255,6 +292,7 @@ public class Fragment_Home extends BaseFragment {
             }
         });
     }
+
     public void clickprodut(final User.Product product) {
 
 
@@ -270,11 +308,9 @@ public class Fragment_Home extends BaseFragment {
         window.setAttributes(wlp);
 
 
-
         muangay = dialog.findViewById(R.id.muangay);
 
         layout = dialog.findViewById(R.id.layout);
-
 
 
         final Calendar calendar1 = Calendar.getInstance();
@@ -283,8 +319,8 @@ public class Fragment_Home extends BaseFragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), UpdateProActivity.class);
-                intent.putExtra("idpro",product.getIdsp());
-                intent.putExtra("id",id);
+                intent.putExtra("idpro", product.getIdsp());
+                intent.putExtra("id", id);
                 startActivity(intent);
                 //Log.e("IDSP", "onClick: "+product.getIdsp());
             }
@@ -293,7 +329,6 @@ public class Fragment_Home extends BaseFragment {
         txtloai = dialog.findViewById(R.id.txtloai);
         txttinhtrang = dialog.findViewById(R.id.txttinhtrang);
         txttrangthai = dialog.findViewById(R.id.txttrangthai);
-        txtsoluong = dialog.findViewById(R.id.txtsoluong);
         txtmota = dialog.findViewById(R.id.txtmota);
 
         LinearLayoutManager imglayout;
@@ -317,7 +352,7 @@ public class Fragment_Home extends BaseFragment {
                 Object o = dataSnapshot.getValue();
                 uri.add(o.toString());
                 Log.e("TAG", uri.size() + "");
-                Log.e("IMG", "onChildAdded: "+o.toString() );
+                Log.e("IMG", "onChildAdded: " + o.toString());
             }
 
             @Override
@@ -348,7 +383,6 @@ public class Fragment_Home extends BaseFragment {
         txttrangthai.setText(product.getStatus());
         txttinhtrang.setText(product.getLovestatus());
         txtmota.setText(product.getDescribe());
-        txtsoluong.setText(product.getSoluong());
 
 
         String thoigia = product.getThoigian();
