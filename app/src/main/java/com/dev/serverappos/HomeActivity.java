@@ -26,6 +26,7 @@ import com.dev.serverappos.base.BaseActivity;
 import com.dev.serverappos.fragment.Fragment_Cart;
 import com.dev.serverappos.fragment.Fragment_Home;
 import com.dev.serverappos.fragment.Fragment_Menu;
+import com.dev.serverappos.fragment.Fragment_Notification;
 import com.dev.serverappos.notification.ConnectionReceiver;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -167,10 +168,10 @@ public class HomeActivity extends BaseActivity implements Toolbar.OnMenuItemClic
                         new Fragment_Menu()).commit();
 
                 break;
-//            case R.id.tab_notification:
-//                getSupportFragmentManager().beginTransaction().replace(R.id.viewpager,
-//                        new Fragment_Notification()).commit();
-//                break;
+            case R.id.tab_notification:
+                getSupportFragmentManager().beginTransaction().replace(R.id.viewpager,
+                        new Fragment_Notification()).commit();
+                break;
 
 
         }

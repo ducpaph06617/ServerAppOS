@@ -357,10 +357,10 @@ public class Fragment_Cart extends BaseFragment {
                     builder.setNegativeButton("Có", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            String title ="Thong Bao";
-                            String messageHUy ="Don Hang Da Het";
+                            String title ="Thông Báo!!!";
+                            String messageHUy ="Đơn Hàng Đã Hết";
                             Notification notification = new NotificationCompat.Builder(getActivity(),HUY_DON_1)
-                                    .setSmallIcon(R.drawable.ic_logo)
+                                    .setSmallIcon(R.drawable.ic_notification)
                                     .setContentTitle(title)
                                     .setContentText(messageHUy)
                                     .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -420,10 +420,10 @@ public class Fragment_Cart extends BaseFragment {
                     builder.setNegativeButton("Có", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            String title ="Thong Bao";
-                            String messageHUy ="Don Hang Da Duoc Xac Nhan";
+                            String title ="Thông Báo!!!";
+                            String messageHUy ="Đơn Hàng của bạn đã được xác nhận";
                             Notification notification = new NotificationCompat.Builder(getActivity(),XAC_NHAN_DON_1)
-                                    .setSmallIcon(R.drawable.ic_logo)
+                                    .setSmallIcon(R.drawable.ic_notification)
                                     .setContentTitle(title)
                                     .setContentText(messageHUy)
                                     .setPriority(NotificationCompat.PRIORITY_LOW)
