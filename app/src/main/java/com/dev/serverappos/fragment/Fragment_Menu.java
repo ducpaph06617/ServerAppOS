@@ -32,6 +32,7 @@ import com.dev.serverappos.LoginActivity;
 
 import com.dev.serverappos.R;
 
+import com.dev.serverappos.SupportActivity;
 import com.dev.serverappos.user.User;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -255,7 +256,14 @@ public class Fragment_Menu extends BaseFragment {
 
         return view;
     }
-
+    public void Support(){
+        cvHelp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(), SupportActivity.class));
+            }
+        });
+    }
 
     //ánh xạ
 
@@ -375,14 +383,7 @@ public class Fragment_Menu extends BaseFragment {
         dialog.show();
     }
 
-    public void Support(){
-        cvHelp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                startActivity(new Intent(getActivity(), SupportActivity.class));
-            }
-        });
-    }
+
 
     public void Exit(){
         cvQuit.setOnClickListener(new View.OnClickListener() {

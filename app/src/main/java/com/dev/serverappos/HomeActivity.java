@@ -172,7 +172,7 @@ public class HomeActivity extends BaseActivity implements Toolbar.OnMenuItemClic
                 getSupportFragmentManager().beginTransaction().replace(R.id.viewpager,
                         new Fragment_Notification()).commit();
                 break;
-                
+
 
 
         }

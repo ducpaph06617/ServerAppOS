@@ -47,6 +47,9 @@
         <activity
             android:name=".AddProductActivity"
             android:theme="@style/Create" />
+        <activity
+            android:name=".SupportActivity"
+            android:theme="@style/Create"></activity>
     </application>
 
 </manifest>
