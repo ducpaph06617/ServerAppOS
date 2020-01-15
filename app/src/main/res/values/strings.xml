@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Online Store</string>
+    <string name="app_name">Online Store Dirver</string>
 
     <!--Login-->
     <string name="phone_number">Số điện thoại</string>

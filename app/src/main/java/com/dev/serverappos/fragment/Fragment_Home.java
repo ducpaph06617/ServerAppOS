@@ -134,7 +134,13 @@ public class Fragment_Home extends BaseFragment {
         id = intent.getStringExtra("id");
         Log.e("IDUS", "onCreateView: " + id);
 //        Toast.makeText(getActivity(), "Home Fragment", Toast.LENGTH_SHORT).show();
-        getproductuser();
+        if(id!=null){
+            getproductuser();
+        }else {
+            Toast.makeText(getActivity(), "đăng nhập!!!", Toast.LENGTH_SHORT).show();
+        }
+
+
         ISNav.getInstance().init(new ImageLoader() {
             @Override
             public void displayImage(Context context, String path, ImageView imageView) {

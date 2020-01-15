@@ -2,6 +2,7 @@ package com.dev.serverappos.fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.Notification;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -25,13 +26,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.dev.serverappos.LoginActivity;
 import com.dev.serverappos.R;
 import com.dev.serverappos.adapter.CartAdapter;
-import com.dev.serverappos.adapter.ImageAdapter2;
 import com.dev.serverappos.adapter.ImageAdapter3;
 import com.dev.serverappos.user.User;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -44,6 +46,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 import pl.droidsonroids.gif.GifImageView;
+
+import static com.dev.serverappos.Notification.HUY_DON_1;
+import static com.dev.serverappos.Notification.XAC_NHAN_DON_1;
 
 public class Fragment_Cart extends BaseFragment {
 
@@ -92,6 +97,8 @@ public class Fragment_Cart extends BaseFragment {
     private ArrayList<String> productss = new ArrayList<>();
     private int i = 0;
 
+    private NotificationManagerCompat notificationManager;
+
 
 
     @Nullable
@@ -112,6 +119,7 @@ public class Fragment_Cart extends BaseFragment {
         recyclerviewcart.setAdapter(cartAdapter);
         getcart();
 
+        notificationManager = NotificationManagerCompat.from(getActivity());
         return view;
     }
 
@@ -333,6 +341,8 @@ public class Fragment_Cart extends BaseFragment {
             btnhuyDon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle("Hủy Đơn");
                     builder.setMessage("Bạn có muốn hủy không?");
@@ -347,6 +357,18 @@ public class Fragment_Cart extends BaseFragment {
                     builder.setNegativeButton("Có", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+                            String title ="Thong Bao";
+                            String messageHUy ="Don Hang Da Het";
+                            Notification notification = new NotificationCompat.Builder(getActivity(),HUY_DON_1)
+                                    .setSmallIcon(R.drawable.ic_logo)
+                                    .setContentTitle(title)
+                                    .setContentText(messageHUy)
+                                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                                    .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                                    .build();
+
+                            notificationManager.notify(1,notification);
+
                             deltail.setTrangThaiB("Đã Hủy");
                             mDatabase.child("id").child("User").child(id).child("bill").child(deltail.getIdbilll()).setValue(deltail).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -371,12 +393,19 @@ public class Fragment_Cart extends BaseFragment {
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
 
+
+
                 }
 
-            });
+            }
+            );
             btnxacnhan.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+
+
+
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle("Xác Nhận");
                     builder.setMessage("Xác nhận đơn hàng?");
@@ -391,6 +420,17 @@ public class Fragment_Cart extends BaseFragment {
                     builder.setNegativeButton("Có", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
+                            String title ="Thong Bao";
+                            String messageHUy ="Don Hang Da Duoc Xac Nhan";
+                            Notification notification = new NotificationCompat.Builder(getActivity(),XAC_NHAN_DON_1)
+                                    .setSmallIcon(R.drawable.ic_logo)
+                                    .setContentTitle(title)
+                                    .setContentText(messageHUy)
+                                    .setPriority(NotificationCompat.PRIORITY_LOW)
+                                    .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                                    .build();
+
+                            notificationManager.notify(2,notification);
                             deltail.setTrangThaiB("Đã Xác Nhận");
                             mDatabase.child("id").child("User").child(id).child("bill").child(deltail.getIdbilll()).setValue(deltail).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override

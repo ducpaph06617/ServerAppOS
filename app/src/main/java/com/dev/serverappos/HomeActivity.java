@@ -87,7 +87,7 @@ public class HomeActivity extends BaseActivity implements Toolbar.OnMenuItemClic
         }
         mapped();
         onclickView();
-        // checkInternetConnection();
+       // checkInternetConnection();
 //
     }
 //
