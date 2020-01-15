@@ -117,6 +117,7 @@ public class Fragment_Home extends BaseFragment {
     private Button btnDangsp;
     private GifImageView loading;
     private int i = 0;
+    APIService apiService;
 
     @Nullable
     @Override

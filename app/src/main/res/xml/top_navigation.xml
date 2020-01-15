@@ -3,11 +3,11 @@
     <tab
         id="@+id/tab_home"
         icon="@drawable/ic_home"
-        title="Sản phẩm" />
+        title="Đơn Hàng" />
     <tab
         id="@+id/tab_cart"
         icon="@drawable/ic_cart"
-        title="Đơn hàng" />
+        title="Sản Phẩm" />
     <tab
         id="@+id/tab_notification"
         icon="@drawable/ic_notification"

@@ -97,10 +97,10 @@ public class HomeActivity extends BaseActivity implements Toolbar.OnMenuItemClic
     private void mapped() {
 
         bottomBar = findViewById(R.id.bottomBar);
-//        nearby = bottomBar.getTabWithId(R.id.tab_cart);
+       nearby = bottomBar.getTabWithId(R.id.tab_cart);
         nearby1 = bottomBar.getTabWithId(R.id.tab_home);
         nearby2 = bottomBar.getTabWithId(R.id.tab_menu);
-//        nearby3 = bottomBar.getTabWithId(R.id.tab_notification);
+       nearby3 = bottomBar.getTabWithId(R.id.tab_notification);
 
     }
 
@@ -154,13 +154,13 @@ public class HomeActivity extends BaseActivity implements Toolbar.OnMenuItemClic
         switch (id) {
             case R.id.tab_home:
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.viewpager,
-                        new Fragment_Home()).commit();
 
+                getSupportFragmentManager().beginTransaction().replace(R.id.viewpager,
+                        new Fragment_Cart()).commit();
                 break;
             case R.id.tab_cart:
                 getSupportFragmentManager().beginTransaction().replace(R.id.viewpager,
-                        new Fragment_Cart()).commit();
+                        new Fragment_Home()).commit();
 
                 break;
             case R.id.tab_menu:
@@ -172,6 +172,7 @@ public class HomeActivity extends BaseActivity implements Toolbar.OnMenuItemClic
                 getSupportFragmentManager().beginTransaction().replace(R.id.viewpager,
                         new Fragment_Notification()).commit();
                 break;
+                
 
 
         }

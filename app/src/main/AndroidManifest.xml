@@ -18,6 +18,15 @@
         android:roundIcon="@drawable/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+
+        <receiver android:name=".notification.ConnectionReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
+
         <activity android:name=".UpdateProActivity"></activity>
         <activity
             android:name=".SplashScreen"
@@ -28,7 +37,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".LoginActivity" android:launchMode="singleTop" />
         <activity
             android:name=".HomeActivity"
             android:screenOrientation="portrait" />

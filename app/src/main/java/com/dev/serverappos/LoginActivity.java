@@ -47,8 +47,18 @@ public class LoginActivity extends BaseActivity {
         mapped();
         method();
         onclick();
+        processIntent(getIntent());
 
+    }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        processIntent(intent);
+    };
+
+    private void processIntent(Intent intent){
+        //get your extras
     }
 
     //Ánh xạ
@@ -128,6 +138,7 @@ public class LoginActivity extends BaseActivity {
         });
 
     }
+
 
     private void method() {
         authStateListener = new FirebaseAuth.AuthStateListener() {

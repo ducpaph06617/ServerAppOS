@@ -3,6 +3,8 @@ package com.dev.serverappos.fragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -281,7 +283,16 @@ public class Fragment_Cart extends BaseFragment {
         builder.show();
 
     }
-
+    public void startNewActivity(Context context, String packageName) {
+        Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+        if (intent == null) {
+            // Bring user to the market or let them choose an app?
+            intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("market://details?id=" + packageName));
+        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
     public void clickbill(final User.BillDeltail deltail) {
 
 
@@ -294,7 +305,7 @@ public class Fragment_Cart extends BaseFragment {
         String idshop = deltail.getIdShop();
         String idspB = deltail.getIdsp();
 
-        String tenSP = deltail.getTenSP();
+        final String tenSP = deltail.getTenSP();
         String loaiSP = deltail.getLoaiSP();
         String giaSPM = deltail.getGiaSPM();
         String moTaSP = deltail.getMoTaSP();
@@ -341,7 +352,8 @@ public class Fragment_Cart extends BaseFragment {
             btnhuyDon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    final PendingIntent contentIntent =
+                            PendingIntent.getActivity(getActivity(), 0, new Intent(getActivity(), LoginActivity.class), 0);
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                     builder.setTitle("Hủy Đơn");
@@ -358,16 +370,18 @@ public class Fragment_Cart extends BaseFragment {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             String title ="Thông Báo!!!";
-                            String messageHUy ="Đơn Hàng Đã Hết";
+                            String messageHUy ="Đơn Hàng " + tenSP + " Đã Bị Hủy";
                             Notification notification = new NotificationCompat.Builder(getActivity(),HUY_DON_1)
                                     .setSmallIcon(R.drawable.ic_notification)
                                     .setContentTitle(title)
                                     .setContentText(messageHUy)
                                     .setPriority(NotificationCompat.PRIORITY_HIGH)
                                     .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                                    .setOngoing(true)
                                     .build();
 
                             notificationManager.notify(1,notification);
+
 
                             deltail.setTrangThaiB("Đã Hủy");
                             mDatabase.child("id").child("User").child(id).child("bill").child(deltail.getIdbilll()).setValue(deltail).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -421,12 +435,12 @@ public class Fragment_Cart extends BaseFragment {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             String title ="Thông Báo!!!";
-                            String messageHUy ="Đơn Hàng của bạn đã được xác nhận";
+                            String messageHUy ="Đơn Hàng " + tenSP + " Đã Được Xác Nhận";
                             Notification notification = new NotificationCompat.Builder(getActivity(),XAC_NHAN_DON_1)
                                     .setSmallIcon(R.drawable.ic_notification)
                                     .setContentTitle(title)
                                     .setContentText(messageHUy)
-                                    .setPriority(NotificationCompat.PRIORITY_LOW)
+                                    .setPriority(NotificationCompat.PRIORITY_HIGH)
                                     .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                                     .build();
 
