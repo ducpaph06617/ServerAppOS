@@ -258,6 +258,7 @@ public class Fragment_Cart extends BaseFragment {
                         loading.setVisibility(View.INVISIBLE);
                         scrollView.setAlpha(1f);
                         getcart();
+
                         cartAdapter.notifyDataSetChanged();
                         if (size==1){
                             startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -279,6 +280,7 @@ public class Fragment_Cart extends BaseFragment {
 
             }
         });
+        cartAdapter.notifyDataSetChanged();
 
         builder.show();
 

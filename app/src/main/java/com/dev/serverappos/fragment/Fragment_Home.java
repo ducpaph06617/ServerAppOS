@@ -84,6 +84,10 @@ public class Fragment_Home extends BaseFragment {
 
     private ArrayList<User.BillDeltail> deltails = new ArrayList<>();
     private ArrayList<String> bills = new ArrayList<>();
+
+
+    private ArrayList<User.cartsp> cartsps = new ArrayList<>();
+    private ArrayList<String> carts = new ArrayList<>();
     private String data = "";
     private static final int REQUEST_LIST_CODE = 0;
     private TextView txtProduct;
@@ -135,10 +139,10 @@ public class Fragment_Home extends BaseFragment {
         id = intent.getStringExtra("id");
         Log.e("IDUS", "onCreateView: " + id);
 //        Toast.makeText(getActivity(), "Home Fragment", Toast.LENGTH_SHORT).show();
-        if(id!=null){
+        if (id != null) {
             getproductuser();
-        }else {
-            Toast.makeText(getActivity(), "đăng nhập!!!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getActivity(), "chưa đăng nhập!!!", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -153,89 +157,119 @@ public class Fragment_Home extends BaseFragment {
 
 
     public void deletesp(final User.Product product, final int i) {
-        mDatabase.child("id").child("User").child(id).child("bill").addChildEventListener(new ChildEventListener() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Thông báo");
+        builder.setMessage("Bạn có muốn xóa sản phẩm\t" + product.getNameproduct() + "\tkhông?");
+        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                User.BillDeltail deltail = dataSnapshot.getValue(User.BillDeltail.class);
-                if (dataSnapshot.getKey() != null) {
-                    Log.e("CHECK1", dataSnapshot.getKey());
-                    bills.add(0, dataSnapshot.getKey());
-                    Log.e("CHECK3", bills.get(0));
-                }
-                deltails.add(0, deltail);
-                for (int j = 0; j < deltails.size(); j++) {
-                    if (!deltails.get(j).getIdsp().equalsIgnoreCase(product.getIdsp())) {
-
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setTitle("Thông báo");
-                        builder.setMessage("Bạn có muốn xóa sản phẩm\t" + product.getNameproduct() + "\tkhông?");
-                        builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        });
-
-                        builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-
-                                mDatabase.child("id").child(product.getIdsp()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-
-                                    }
-                                });
-
-                                mDatabase.child("id").child("User").child(id).child("user").child("idsp").child(product.getIdsp()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-
-                                    }
-                                });
-                                mDatabase.child("id").child("User").child("sp").child(product.getIdsp()).removeValue();
-
-                                getproductuser();
-                                productuserAdapter.notifyDataSetChanged();
-                                if (i == 0) {
-                                    txtthongbao.setVisibility(View.VISIBLE);
-                                }
-
-
-                            }
-                        });
-
-
-                        builder.show();
-
-                    } else if (deltails.get(j).getIdsp().equalsIgnoreCase(product.getIdsp())) {
-                        Toast.makeText(getActivity(), "Sản phẩm đang có người mua", Toast.LENGTH_LONG).show();
-                    }
-                }
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+            public void onClick(DialogInterface dialog, int which) {
+                //Toast.makeText(getActivity(), "Xóa không thành công", Toast.LENGTH_SHORT).show();
             }
         });
 
+        builder.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getActivity(), "Xóa Thành công"+product.getNameproduct(), Toast.LENGTH_SHORT).show();
+                mDatabase.child("id").child("User").child(id).child("bill").addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        User.BillDeltail deltail = dataSnapshot.getValue(User.BillDeltail.class);
+                        if (dataSnapshot.getKey() != null) {
+                            Log.e("CHECK1", dataSnapshot.getKey());
+                            bills.add(0, dataSnapshot.getKey());
+                            Log.e("CHECK3", bills.get(0));
+                        }
+                            deltails.add(0, deltail);
+
+
+                            for (int j = 0; j < deltails.size(); j++) {
+                                if (deltails.get(j).getIdsp().equalsIgnoreCase(product.getIdsp())) {
+
+
+
+                                    mDatabase.child("id").child("User").child(id).child("bill").child(deltails.get(j).getIdbilll()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+
+                                        }
+                                    });
+                                    mDatabase.child("id").child("User").child(deltails.get(j).getIdMua()).child("bill").child(deltails.get(j).getIdbilll()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+
+                                        }
+                                    });
+
+                                    mDatabase.child("id").child("User").child(deltails.get(j).getIdMua()).child("cart").child(deltails.get(j).getIdsp()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(getActivity(), "Sản phẩm đang có người mua", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                    mDatabase.child("id").child("User").child(id).child("cart").child(deltails.get(j).getIdsp()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Toast.makeText(getActivity(), "Sản phẩm đang có người mua 2", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+
+                                }
+
+                            }
+
+                        }
+
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+
+                });
+                mDatabase.child("id").child(product.getIdsp()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                });
+
+                mDatabase.child("id").child("User").child(id).child("user").child("idsp").child(product.getIdsp()).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                });
+                mDatabase.child("id").child("User").child("sp").child(product.getIdsp()).removeValue();
+
+                getproductuser();
+                productuserAdapter.notifyDataSetChanged();
+                if (i == 0) {
+                    txtthongbao.setVisibility(View.VISIBLE);
+                }
+
+
+                productuserAdapter.notifyDataSetChanged();
+            }
+
+
+        });
+        builder.show();
     }
 
     private void getproductuser() {

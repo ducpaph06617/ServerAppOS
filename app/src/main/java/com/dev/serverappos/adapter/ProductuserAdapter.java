@@ -1,6 +1,7 @@
 package com.dev.serverappos.adapter;
 
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,6 +59,7 @@ public class ProductuserAdapter extends RecyclerView.Adapter<ProductuserAdapter.
             @Override
             public void onClick(View v) {
                 context.deletesp(product, products.size());
+                Log.e("DELEPRO","DELESS");
             }
         });
     }

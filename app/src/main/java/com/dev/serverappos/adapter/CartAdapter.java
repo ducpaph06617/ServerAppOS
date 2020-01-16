@@ -47,7 +47,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
     @Override
     public void onBindViewHolder(@NonNull final CartHolder holder, final int position) {
         final User.Product product = products.get(position);
-        if (deltails != null) {
+
             final User.BillDeltail deltail = deltails.get(position);
 
 
@@ -88,7 +88,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartHolder> {
                 }
             });
         }
-    }
+
 
     @Override
     public int getItemCount() {
